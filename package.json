@@ -1,0 +1,70 @@
+{
+  "name": "PayTrack",
+  "version": "1.0.0",
+  "description": "paytrack",
+  "author": "youceflaala",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "postinstall": "electron-builder install-app-deps",
+    "pack": "electron-builder --dir",
+  "obfuscate": "node obfuscate.js",
+  "dist": "npm run obfuscate && electron-builder",
+    "rebuild": "electron-rebuild"
+  },
+  "build": {
+    "appId": "com.paytrack.app",
+    "productName": "paytrack",
+    "copyright": "Copyright © 2026 youcef laala",
+    "directories": {
+      "output": "dist",
+      "buildResources": "client/build"
+    },
+    "files": [
+      "main.js",
+      "package.json",
+      "Server/**/*",
+      "client/build/**/*"
+    ],
+    "extraResources": [
+      {
+        "from": "Server/managecash.sqlite",
+        "to": "database/managecash.sqlite"
+      }
+    ],
+    "asar": true,
+    "asarUnpack": [
+      "Server/backups/**/*",
+      "Server/managecash.sqlite"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "client/build/logo.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": true,
+      "allowElevation": true,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "PayTrak",
+      "installerIcon": "client/build/logo.ico",
+      "uninstallerIcon": "client/build/logo.ico",
+      "runAfterFinish": true
+    }
+  },
+  "devDependencies": {
+    "@electron/rebuild": "^4.0.3",
+    "electron": "^35.1.2",
+    "electron-builder": "^26.0.12",
+    "javascript-obfuscator": "^5.5.0"
+  }
+}
